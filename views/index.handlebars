@@ -13,7 +13,7 @@
             <button class="btn btn-primary btn-sm" id="scrapeBtn">SCRAPE</button>
         </div>
         <div class="col-md-4">
-            <a href="https://www.nytimes.com" class="upper-link">NYTIMES.COM</a>
+            <a href="http://www.echojs.com/" class="upper-link">NYTIMES.COM</a>
         </div>
     </div>
 </div>
@@ -25,17 +25,13 @@
     {{#unless saved}}
     <div class="col-md-6">
         <div class="article">
-            <h2 class="headline">{{headline}}</h2>
-            <ul>
-                <li class="summary">{{summaryOne}}</li>
-                <li class="summary">{{summaryTwo}}</li>
-            </ul>
+            <h2 class="titleinput">{{title}}</h2>
 
             <hr>
 
             <div class="row" id="bottom-row">
                 <div class="col-md-6">
-                    <a href={{link}} class="link">Full Story</a>
+                    <a href={{link}} class="bodyinput">Full Story</a>
                 </div>
                 <div class="col-md-6">
                     <form action="/update" method="PUT" id="save-article">
@@ -49,34 +45,3 @@
     {{/unless}}
     {{/each}}
 </div>
-
-<script>
-    $(document).ready(function () {
-        $("#scrapeBtn").on("click", function (event) {
-            event.preventDefault();
-
-            $.get("/newscrape", function (data) {
-                location.reload();
-            });
-        });
-
-        $("#save-article").on("click", function (event) {
-            event.preventDefault();
-
-            console.log("saved");
-
-            var id = $(this).children().val();
-            console.log(id);
-
-            var data = {
-                _id: id
-            }
-
-            $.ajax("/update/" + id, {
-                type: "PUT",
-                data: data
-            })
-            location.reload();
-        });
-    });
-</script>
