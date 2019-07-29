@@ -7,41 +7,45 @@
 
     <div class="row" class="linkRow">
         <div class="col-md-4">
-            <a href="/saved" class="upper-link">SAVE ARTICLES</a>
+            <a href="/articles" class="upper-link">SAVE ARTICLES</a>
         </div>
         <div class="col-md-4">
             <button class="btn btn-primary btn-sm" id="scrapeBtn">SCRAPE</button>
         </div>
         <div class="col-md-4">
-            <a href="http://www.echojs.com/" class="upper-link">NYTIMES.COM</a>
+            <a href="http://www.echojs.com/" class="upper-link">TEST LINK</a>
         </div>
     </div>
 </div>
 
-<hr class="white-underline">
-
 <div class="row">
-    {{#each result}}
-    {{#unless saved}}
     <div class="col-md-6">
         <div class="article">
-            <h2 class="titleinput">{{title}}</h2>
 
-            <hr>
+            <h2 class="titleinput">Test</h2>
 
             <div class="row" id="bottom-row">
                 <div class="col-md-6">
-                    <a href={{link}} class="bodyinput">Full Story</a>
+                    <a href="" class="bodyinput">Full Story</a>
                 </div>
+
                 <div class="col-md-6">
-                    <form action="/update" method="PUT" id="save-article">
-                        <input type="hidden" name="id" value={{_id}}>
+                    <form action="/articles" method="PUT" id="save-article">
+                        <input type="hidden" name="id" value="">
                         <button class="btn btn-lg" id="saveBtn" type="submit">SAVE ARTICLE</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    {{/unless}}
-    {{/each}}
+</div>
+
+<div id="wrapper">
+    <h1>Note Scraper</h1>
+    <a href="/scrape" id="btn-scrape">1. Scrape</a>
+    <a href="/articles" id="btn-articles">2. Articles</a>
+
+    <div id="articles"></div>
+
+    <div id="notes"></div>
 </div>

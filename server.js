@@ -27,7 +27,7 @@ app.use(express.static("public"));
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
-//app.set("index", __dirname + "/views");
+app.set("index", __dirname + "/views");
 
 // Connect to MongoDB - if deployed then use monolab - else use local db
 const MONGODB_URI = process.env.MONGO_URI || "mongodb://localhost/mongoHeadlines";
@@ -35,6 +35,10 @@ const MONGODB_URI = process.env.MONGO_URI || "mongodb://localhost/mongoHeadlines
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
+
+app.get("/", (req, res) => {
+    res.render("index");
+})
 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function (req, res) {
