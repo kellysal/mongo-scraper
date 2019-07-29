@@ -20,7 +20,7 @@ $(function () {
         });
     });
 
-    $("#save").on("click", function (e) {
+    $("#save").on("click", function () {
         let id = $(this).attr("value");
         console.log(id);
         $.ajax({

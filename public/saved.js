@@ -6,7 +6,7 @@ $(function () {
             type: "PUT",
             url: "/removeFromSaved/" + id
         }).then(function () {
-            console.log("Removed article from saved.");
+            console.log("Removed article from saved");
             location.reload();
         });
     });
@@ -21,7 +21,7 @@ $(function () {
             url: "/saveComment/" + id,
             data: note
         }).then(function () {
-            console.log("Added comment to article.");
+            console.log("Added comment to article");
             location.reload();
         });
     });
