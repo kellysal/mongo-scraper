@@ -43,7 +43,6 @@ $(function () {
             </li> 
                 `);
             });
-            console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
             $("#modalTitle").text("Comments for Article: " + id);
             $("#saveComment").attr("value", id);
             //location.reload();

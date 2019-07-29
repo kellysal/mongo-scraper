@@ -25,7 +25,7 @@ $(function () {
         console.log(id);
         $.ajax({
             type: "PUT",
-            url: "/saveArticle" + id
+            url: "/savedArticles" + id
         }).then(function () {
             console.log("Saved article");
             location.reload();

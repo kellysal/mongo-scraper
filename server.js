@@ -1,12 +1,13 @@
 // Dependencies
 const express = require("express");
-const exphbs = require("express-handlebars");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
 // Scraping tools
 const axios = require("axios");
 const cheerio = require("cheerio");
+
+const exphbs = require("express-handlebars");
 
 // Require models
 const db = require("./models");
@@ -57,19 +58,20 @@ app.get("/scrape", function (req, res) {
             result.link = $(element).find("a").attr("href");
 
             // Create a new Article using the `result` object built from scraping
-            db.Article.find({ title: result.title }).then(function (data) {
-                db.Article.create(result).then(dbArticle => {
-                    // View the added result in the console
-                    console.log(dbArticle);
-                    // If an error occurred, log it
-                }).catch(err => console.log(err));
+            db.Article.create(result).then(function (dbArticle) {
+                // View the added result in the console
+                console.log(dbArticle);
 
-            });
+            })
+                .catch(function (err) {
+                    // If an error occurred, log it
+                    console.log(err);
+                });
         });
-        console.log("Done");
+
+        // Send a message to the client
+        res.send("Scrape Complete");
     });
-    // Send a message to the client
-    res.send("Scrape Complete");
 });
 
 // Route for getting all Articles from the db
@@ -96,7 +98,7 @@ app.put("/saveArticle/:id", function (req, res) {
 });
 
 // Route for saving/updating an Article's associated Note
-app.get("/saveAricle", function (req, res) {
+app.get("/savedArticles", function (req, res) {
     db.Article.find({ saved: true }).then(function (articles) {
         res.render("saved", { articles });
     });
@@ -134,6 +136,7 @@ app.delete("/deleteComment/:noteid", function (req, res) {
         res.send("Comment Deleted");
     })
 });
+
 
 // Start the server
 app.listen(PORT, function () {
