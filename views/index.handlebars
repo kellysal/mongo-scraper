@@ -1,51 +1,29 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-12" id="titleDiv">
-            <h1 id="title">NY Times Scraper</h1>
-        </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link" href="/">Home</a>
+        <a class="nav-item nav-link" href="/saveArticle">Saved</a>
     </div>
+</nav>
 
-    <div class="row" class="linkRow">
-        <div class="col-md-4">
-            <a href="/articles" class="upper-link">SAVE ARTICLES</a>
-        </div>
-        <div class="col-md-4">
-            <button class="btn btn-primary btn-sm" id="scrapeBtn">SCRAPE</button>
-        </div>
-        <div class="col-md-4">
-            <a href="http://www.echojs.com/" class="upper-link">TEST LINK</a>
-        </div>
-    </div>
+<div class="jumbotron text-center">
+    <h1 class="display-4">Buzzfeed Scraper</h1>
+    <a class="btn btn-primary btn-lg" id="scrape" role="button">Scrape Articles</a>
+    <a class="btn btn-primary btn-lg" id="delete" role="button">Delete Articles</a>
 </div>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="article">
-
-            <h2 class="titleinput">Test</h2>
-
-            <div class="row" id="bottom-row">
-                <div class="col-md-6">
-                    <a href="" class="bodyinput">Full Story</a>
-                </div>
-
-                <div class="col-md-6">
-                    <form action="/articles" method="PUT" id="save-article">
-                        <input type="hidden" name="id" value="">
-                        <button class="btn btn-lg" id="saveBtn" type="submit">SAVE ARTICLE</button>
-                    </form>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-10 articles text-center">
+            {{#each articles}}
+            <div class="card">
+                <div class="card-body">
+                    <a href={{this.link}}>
+                        <h5 class="card-title">{{this.title}}</h5>
+                    </a>
+                    <a href="#" class="btn btn-primary" id="save" value={{this._id}}>Save</a>
                 </div>
             </div>
+            {{/each}}
         </div>
     </div>
-</div>
-
-<div id="wrapper">
-    <h1>Note Scraper</h1>
-    <a href="/scrape" id="btn-scrape">1. Scrape</a>
-    <a href="/articles" id="btn-articles">2. Articles</a>
-
-    <div id="articles"></div>
-
-    <div id="notes"></div>
 </div>

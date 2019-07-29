@@ -13,10 +13,15 @@ var ArticleSchema = new Schema({
         type: String,
         required: true
     },
-    note: {
+    // saved: {
+    //     type: Boolean,
+    //     required: true,
+    //     dafeult: false
+    // },
+    note: [{
         type: Schema.Types.ObjectId,
         ref: "Note"
-    }
+    }]
 });
 
 // Create our model from the above schema - using mongoose model method
