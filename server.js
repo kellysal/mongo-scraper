@@ -126,7 +126,7 @@ app.post("/saveNote/:id", function (req, res) {
     });
 });
 
-// GET route - to show notes per article
+// GET route - to show notes per article (*NEED TO FIX)
 app.get("/getNotes/:id", function (req, res) {
     db.Article.findOne({ _id: req.params.id }).populate("notes")
         .then(function (dbArticle) {

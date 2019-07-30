@@ -78,13 +78,10 @@ $(function () {
         }).then(function (data) {
             console.log(data);
             $(".list-group").append("<h2>" + data.title + "</h2>");
-            // data.notes.forEach((element, index) => {
+            $(".list-group").append(`<li class="list-group-item">${data.body}
+            <button class="btn btn-danger" value=${data._id} id="deleteNote"> x </button>
+            </li>`);
 
-            //     $(".list-group").append(`<li class="list-group-item">${element.body}
-            //     <button class="btn btn-danger" value=${element._id} id="deleteNote"> x </button>
-            // </li> 
-            //     `);
-            // });
             if (data.note) {
                 $("#modalTitle").text("Notes For Article: " + id);
                 $("#saveNote").attr("value", id);
