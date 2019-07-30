@@ -12,12 +12,12 @@ $(function () {
 
     // Delete on-click event
     $("#delete").on("click", function (event) {
-        console.log("PLEASE WORK");
+        // console.log("PLEASE WORK");
         $.ajax({
             type: "DELETE",
             url: "/delete"
         }).then(function () {
-            console.log("Deleted articles");
+            console.log("Deleted");
             location.reload();
         });
     });
@@ -30,7 +30,7 @@ $(function () {
             type: "PUT",
             url: "/saveArticle/" + id
         }).then(function () {
-            console.log("Saved article");
+            console.log("Saved");
             location.reload();
         });
     });
@@ -44,7 +44,7 @@ $(function () {
             type: "PUT",
             url: "/removeFromSaved/" + id
         }).then(function () {
-            console.log("Removed article from saved.");
+            console.log("Removed");
             location.reload();
         });
     });
@@ -59,7 +59,7 @@ $(function () {
             url: "/saveComment/" + id,
             data: note
         }).then(function () {
-            console.log("Added comment to article");
+            console.log("Added comment");
             location.reload();
         });
     });
@@ -68,16 +68,13 @@ $(function () {
         let id = $(this).attr("value");
         console.log(id);
         $(".list-group").empty();
+
         $.ajax({
             type: "GET",
             url: "/getComments/" + id
         }).then(function (data) {
-            // console.log(data);
-            // console.log(data.notes);
             data.notes.forEach((element, index) => {
-                $(".list-group").append(`
-                <li class="list-group-item">
-                ${element.body}
+                $(".list-group").append(`<li class="list-group-item">${element.body}
                 <button class="btn btn-danger" value=${element._id} id="deleteComment"> x </button>
             </li> 
                 `);
@@ -85,9 +82,7 @@ $(function () {
             console.log("test");
             $("#modalTitle").text("Comments for Article: " + id);
             $("#saveComment").attr("value", id);
-            //location.reload();
         });
-        // $("#commentsModal").modal("show");
     });
 
     $(document).on("click", "#deleteComment", function (e) {
@@ -98,7 +93,7 @@ $(function () {
             type: "DELETE",
             url: "/deleteComment/" + noteID
         }).then(function () {
-            console.log("Deleted comment");
+            console.log("Deleted");
             location.reload();
         });
     });

@@ -1,5 +1,7 @@
 # All the News That's Fit to Scrape
 
+Deployed on Heroku: https://agile-beyond-94678.herokuapp.com/
+
 ### Overview
 
 In this assignment, you'll create a web app that lets users view and leave comments on the latest news. But you're not going to actually write any articles; instead, you'll flex your Mongoose and Cheerio muscles to scrape news from another site.
@@ -46,26 +48,6 @@ mongoose.connect(MONGODB_URI);
 8. [Watch this demo of a possible submission](https://youtu.be/4ltZr3VPmno). See the deployed demo application [here](http://nyt-mongo-scraper.herokuapp.com/).
 
 9. Your site doesn't need to match the demo's style, but feel free to attempt something similar if you'd like. Otherwise, just be creative!
-
-### Commits
-
-Having an active and healthy commit history on GitHub is important for your future job search. It is also extremely important for making sure your work is saved in your repository. If something breaks, committing often ensures you are able to go back to a working version of your code.
-
-* Committing often is a signal to employers that you are actively working on your code and learning.
-
-  * We use the mantra “commit early and often.”  This means that when you write code that works, add it and commit it!
-
-  * Numerous commits allow you to see how your app is progressing and give you a point to revert to if anything goes wrong.
-
-* Be clear and descriptive in your commit messaging.
-
-  * When writing a commit message, avoid vague messages like "fixed." Be descriptive so that you and anyone else looking at your repository knows what happened with each commit.
-
-* We would like you to have well over 200 commits by graduation, so commit early and often!
-
-### Submission on BCS
-
-* **This assignment must be deployed.** * Please submit both the deployed Heroku link to your homework AND the link to the Github Repository!
 
 ## Instructions
 

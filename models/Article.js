@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 // Save a reference to the Schema constructor
 const Schema = mongoose.Schema;
 
-//Using the Schema constructor - create a new UserSchema object
+// Using the Schema constructor - create a new UserSchema object
 var ArticleSchema = new Schema({
     title: {
         type: String,
@@ -18,8 +18,8 @@ var ArticleSchema = new Schema({
         required: true
     },
     // image: {
-    //     type: String
-    //     // required: true
+    //     type: String,
+    //     required: true
     // },
     saved: {
         type: Boolean,

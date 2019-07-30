@@ -2,21 +2,22 @@
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+const exphbs = require("express-handlebars");
 
 // Scraping tools
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-const exphbs = require("express-handlebars");
-
 // Require models
 const db = require("./models");
 
+// PORT
 const PORT = process.env.PORT || 3000;
 
 // Initialize express
 const app = express();
 
+// Handlebars
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
@@ -54,7 +55,7 @@ app.get("/scrape", function (req, res) {
             result.title = $(this).find("h2").text();
             result.summary = $(this).find("p").text();
             result.link = $(this).find("a").attr("href");
-            // result.image = $(this).find("a").find("img").attr("src");
+            // result.image = $(this).children(".card_image").children("img").attr("url");
             // result.image = $(this).find("img").attr("href");
             // result.image = $(this).find("a").find("img").attr("src");
 
@@ -77,19 +78,14 @@ app.get("/scrape", function (req, res) {
     });
 });
 
+// GET route - Index
 app.get("/", function (req, res) {
     db.Article.find({ saved: false }).then(function (articles) {
         res.render("index", { articles });
     });
 });
 
-app.delete("/delete", function (req, res) {
-    db.Article.deleteMany({}).then(function (data) {
-        console.log(data);
-        res.render("index", data);
-    });
-});
-
+// PUT route - to save one article
 app.put("/saveArticle/:id", function (req, res) {
     db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true }).then(function (data) {
         console.log(data);
@@ -97,18 +93,29 @@ app.put("/saveArticle/:id", function (req, res) {
     });
 });
 
+// GET route - to show all saved articles
 app.get("/savedArticles", function (req, res) {
     db.Article.find({ saved: true }).then(function (articles) {
         res.render("saved", { articles });
     });
 });
 
-app.put("/removeFromSaved/:id", function (req, res) {
-    db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: false }).then(function (data) {
-        res.send("Removed from saved");
+// DELETE route - to delete all articles
+app.delete("/delete", function (req, res) {
+    db.Article.deleteMany({}).then(function (data) {
+        console.log(data);
+        res.render("index", data);
     });
 });
 
+// PUT route - to remove one article
+app.put("/removeFromSaved/:id", function (req, res) {
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: false }).then(function (data) {
+        res.send("Removed");
+    });
+});
+
+// POST route - to save a comment
 app.post("/saveComment/:id", function (req, res) {
     db.Note.create(req.body).then(function (dbNote) {
         return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true });
@@ -119,6 +126,7 @@ app.post("/saveComment/:id", function (req, res) {
     });
 });
 
+// GET route - to show comments per article
 app.get("/getComments/:id", function (req, res) {
     db.Article.findOne({ _id: req.params.id }).populate("notes")
         .then(function (dbArticle) {
@@ -128,10 +136,11 @@ app.get("/getComments/:id", function (req, res) {
         });
 });
 
+// DELETE route - to delete a comment
 app.delete("/deleteComment/:noteid", function (req, res) {
     db.Note.deleteOne({ _id: req.params.noteid }).then(function (data) {
         console.log(data);
-        res.send("Deleted comment");
+        res.send("Deleted");
     })
 });
 

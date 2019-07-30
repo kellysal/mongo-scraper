@@ -5,25 +5,29 @@
     </div>
 </nav>
 
-<div class="jumbotron text-center">
-    <h1 class="display-4">Your saved articles.</h1>
-    <a class="btn btn-primary btn-lg" id="delete" role="button">Delete all articles.</a>
+<div class="jumbotron jumbotron-fluid text-center" style="background-color:#EB352C;">
+    <h1>Saved Buzzfeed Articles!</h1>
+    <a class="btn btn-primary btn-lg" style="background-color:black; color:white; border:none;" id="delete"
+        role="button">Delete All</a>
 </div>
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-10 articles text-center">
+        <div class="col-md-12 articles text-center">
             {{#each articles}}
-            <div class="card">
+            <div class="card" style="margin:30px;">
 
                 <div class="card-body">
                     <a href={{this.link}}>
-                        <h5 class="card-title">{{title}}</h5>
+                        <h4 class="card-title" style="color:black;">{{title}}</h4>
                     </a>
-                    <h6 class="card-text">{{category}}</h6>
-                    <a href="#" class="btn btn-primary" id="removeFromSave" value={{_id}}>Delete from Saved</a>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentsModal"
-                        id="comments" value={{_id}}>Comments</button>
+                    <p class="card-text" style="color:grey;">{{summary}}</p>
+
+                    <a href="#" class="btn btn-primary" style="background-color: #EB352C; border:none;"
+                        id="removeFromSave" value={{_id}}>Delete</a>
+
+                    <button type="button" class="btn btn-primary" style="background-color: #EB352C; border:none;"
+                        data-toggle="modal" data-target="#commentsModal" id="comments" value={{_id}}>Comments</button>
                 </div>
             </div>
             {{/each}}
@@ -46,10 +50,10 @@
                 <ul class="list-group">
 
                 </ul>
-                <textarea class="form-control" id="newComment" rows="3" placeholder="New comment."></textarea>
+                <textarea class="form-control" id="newComment" rows="3" placeholder="Add a comment"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveComment">Save comment</button>
+                <button type="button" class="btn btn-primary" id="saveComment">Save</button>
             </div>
         </div>
     </div>
