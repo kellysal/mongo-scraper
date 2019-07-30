@@ -114,8 +114,7 @@ app.post("/save/:id", function (req, res) {
 
 // POST Route for grabbing a specific Article by id, update status to "unsaved"
 app.post("/unsave/:id", function (req, res) {
-    db.Article
-        .update({ _id: req.params.id }, { $set: { saved: false } })
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { $set: { saved: false } })
         .then(function (dbArticle) {
             res.json("dbArticle");
         })
@@ -127,7 +126,7 @@ app.post("/unsave/:id", function (req, res) {
 // GET route to render Articles to handlebars and populate with saved articles
 app.get("/saved", function (req, res) {
     // Grab every document in the Articles collection
-    db.Article.findOneAndUpdate({ saved: true }).then(function (dbArticles) {
+    db.Article.find({ saved: true }).then(function (dbArticles) {
         var hbsObject = {
             articles: dbArticles
         };
