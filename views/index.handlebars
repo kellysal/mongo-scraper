@@ -1,31 +1,27 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/">Home</a>
-        <a class="nav-item nav-link" href="/savedArticles">Saved</a>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Scraper</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right top-buttons">
+            <li><button class="btn btn-warning scrape">Scrape Articles!</button></li>
+            <li><button class="btn btn-warning saved">Saved Articles</button></li>
+        </ul>
     </div>
 </nav>
 
-<div class="jumbotron text-center">
-    <h1 class="display-4">Buzzfeed Scraper</h1>
-    <a class="btn btn-primary btn-lg" id="scrape" role="button">Scrape Articles</a>
-    <a class="btn btn-primary btn-lg" id="delete" role="button">Delete Articles</a>
-</div>
-
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10 articles text-center">
-            {{#each articles}}
-            <div class="card">
-                <div class="card-body">
-
-                    <a href={{this.link}}>
-                        <h5 class="card-title">{{this.title}}</h5>
-                    </a>
-                    <p>{{this.summary}}</p>
-                    <a href="#" class="btn btn-primary" id="#save" value={{this._id}}>Save</a>
-                </div>
-            </div>
-            {{/each}}
-        </div>
+<div class="articles">
+    <div class="load"></div>
+    {{#each articles}}
+    {{#unless saved}}
+    <div class="article">
+        <a href="{{link}}">
+            <h2>{{title}}</h2>
+        </a>
+        <p>{{summary}}</p>
+        <button class="btn btn-primary save" data-id="{{_id}}">SAVE</button>
+        <br>
     </div>
+    {{/unless}}
+    {{/each}}
 </div>

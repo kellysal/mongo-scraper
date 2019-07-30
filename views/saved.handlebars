@@ -1,51 +1,41 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/">Home</a>
-        <a class="nav-item nav-link" href="/savedArticles">Saved</a>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Scraper</a>
+        </div>
+        <ul class="nav navbar-nav navbar-right top-buttons">
+            <li><button class="btn btn-warning home">HOME</button></li>
+        </ul>
     </div>
 </nav>
 
-<div class="jumbotron text-center">
-    <h1 class="display-4">Saved Articles</h1>
-    <a class="btn btn-primary btn-lg" id="delete" role="button">Delete Articles</a>
-</div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10 articles text-center">
-            {{#each articles}}
-            <div class="card">
-                <div class="card-body">
-                    <a href={{this.link}}>
-                        <h5 class="card-title">{{title}}</h5>
-                    </a>
-                    <a href="#" class="btn btn-primary" id="removeFromSave" value={{_id}}>Delete Saved</a>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#commentsModal"
-                        id="comments" value={{_id}}>Comment</button>
-                </div>
-            </div>
-            {{/each}}
-        </div>
+<div class="articles">
+    {{#each articles}}
+    {{#if saved}}
+    <div class="article">
+
+        <a href="{{link}}">
+            <h2>{{title}}</h2>
+        </a>
+        <p>{{summary}}</p>
+        <button class="btn btn-primary unsave" data-id="{{_id}}">UNSAVE</button>
+        <button class="btn btn-primary addNote" data-id="{{_id}}">NOTE</button>
+        <br>
     </div>
+    {{/if}}
+    {{/each}}
 </div>
 
-<div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
+{{!-- Modal --}}
+<div id="noteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle"></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title text-center">Add a note</h4>
             </div>
-            <div class="modal-body">
-                <ul class="list-group"></ul>
-                <textarea class="form-control" id="newComment" rows="3" placeholder="New comment"></textarea>
-            </div>
-            <div class="model-footer">
-                <button type="button" class="btn btn-primary" id="saveComment">Save comment</button>
-            </div>
+            <div id="notes" class="modal-body"></div>
         </div>
     </div>
 </div>

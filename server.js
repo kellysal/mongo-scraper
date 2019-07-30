@@ -37,9 +37,17 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 
-// app.get("/", (req, res) => {
-//     res.render("index");
-// })
+// Route for getting all saved Articles from the db
+app.get("/", function (req, res) {
+    db.Article.find({ saved: false }).then(function (dbArticle) {
+        let hbsObject = {
+            articles: dbArticle
+        };
+        res.render("index", hbsObject);
+    }).catch(function (err) {
+        res.json(err);
+    });
+});
 
 // A GET route for scraping the buzzfeed website
 app.get("/scrape", function (req, res) {
@@ -54,9 +62,9 @@ app.get("/scrape", function (req, res) {
             var result = {};
 
             // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(element).find("h2").text();
-            result.summary = $(element).find("p").text();
-            result.link = $(element).find("a").attr("href");
+            result.title = $(this).find("h2").text();
+            result.summary = $(this).find("p").text();
+            result.link = $(this).find("a").attr("href");
             // result.image = $(this).find("img").attr("href");
 
 
@@ -80,12 +88,61 @@ app.get("/scrape", function (req, res) {
     });
 });
 
-// Route for getting all Articles from the db
-app.get("/articles", function (req, res) {
-    // Grab every document in the Articles collection
-    db.Article.find({})
+// // Route for getting all Articles from the db
+// app.get("/articles", function (req, res) {
+//     // Grab every document in the Articles collection
+//     db.Article.find({})
+//         .then(function (dbArticle) {
+//             // If we are able to successfully find Articles - send the back to the client
+//             res.json(dbArticle);
+//         })
+//         .catch(function (err) {
+//             res.json(err);
+//         });
+// });
+
+// POST Route for grabbing a specific Article by id, update status to "saved"
+app.post("/save/:id", function (req, res) {
+    db.Article.findOneAndUpdate({ _id: req.params.id }, { $set: { saved: true } })
         .then(function (dbArticle) {
-            // If we are able to successfully find Articles - send the back to the client
+            res.send("dbArticle");
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
+});
+
+// POST Route for grabbing a specific Article by id, update status to "unsaved"
+app.post("/unsave/:id", function (req, res) {
+    db.Article
+        .update({ _id: req.params.id }, { $set: { saved: false } })
+        .then(function (dbArticle) {
+            res.json("dbArticle");
+        })
+        .catch(function (err) {
+            res.json(err);
+        });
+});
+
+// GET route to render Articles to handlebars and populate with saved articles
+app.get("/saved", function (req, res) {
+    // Grab every document in the Articles collection
+    db.Article.findOneAndUpdate({ saved: true }).then(function (dbArticles) {
+        var hbsObject = {
+            articles: dbArticles
+        };
+        // If we are able to successfully find Articles - send the back to the client
+        res.render("saved", hbsObject);
+    }).catch(function (err) {
+        res.json(err);
+    });
+});
+
+
+// GET route to retrieve all notes for a specific article
+app.get('/getNotes/:id', function (req, res) {
+    db.Article.findOne({ _id: req.params.id }).populate("note")
+        .then(function (dbArticle) {
             res.json(dbArticle);
         })
         .catch(function (err) {
@@ -93,68 +150,18 @@ app.get("/articles", function (req, res) {
         });
 });
 
-app.get("/", function (req, res) {
-    db.Article.find({ saved: false }).then(function (articles) {
-        res.render("index", { articles });
-    });
-});
-
-// Route to delete
-app.delete("/delete", function (req, res) {
-    db.Article.deleteMany({}).then(function (data) {
-        console.log(data);
-        res.render("index", data);
-    });
-});
-
-// Route for grabbing a specific Article by id, populate it with it's note
-app.put("/saveArticle/:id", function (req, res) {
-    db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: true }).then(function (data) {
-        console.log(data);
-        res.send("Saved");
-    });
-});
-
-// Route for saving/updating an Article's associated Note
-app.get("/savedArticles", function (req, res) {
-    db.Article.find({ saved: true }).then(function (articles) {
-        res.render("saved", { articles });
-    });
-});
-
-app.put("/removeFromSaved/:id", function (req, res) {
-    db.Article.findOneAndUpdate({ _id: req.params.id }, { saved: false }).then(function (data) {
-        res.send("Removed");
-    });
-});
-
-app.post("/saveComment/:id", function (req, res) {
+// POST route to create a new note in the database
+app.post('/createNote/:id', function (req, res) {
     db.Note.create(req.body).then(function (dbNote) {
-        return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: db.Note._id } }, { new: true });
-    }).then(function (dbArticle) {
-        res.json(dbArticle);
-    }).catch(function (err) {
-        res.json(err);
-    });
-});
-
-app.get("/getComments/:id", function (req, res) {
-    db.Article.findOne({ _id: req.params.id }).populate("notes")
+        return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { note: dbNote._id } }, { new: true });//saving reference to note in corresponding article
+    })
         .then(function (dbArticle) {
             res.json(dbArticle);
-        }).catch(function (err) {
+        })
+        .catch(function (err) {
             res.json(err);
         });
 });
-
-// Route to delete
-app.delete("/deleteComment/:noteid", function (req, res) {
-    db.Note.deleteOne({ _id: req.params.noteid }).then(function (data) {
-        console.log(data);
-        res.send("Comment Deleted");
-    })
-});
-
 
 // Start the server
 app.listen(PORT, function () {
