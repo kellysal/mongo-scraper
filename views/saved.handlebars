@@ -27,7 +27,7 @@
                         id="removeFromSave" value={{_id}}>Delete</a>
 
                     <button type="button" class="btn btn-primary" style="background-color: #EB352C; border:none;"
-                        data-toggle="modal" data-target="#commentsModal" id="comments" value={{_id}}>Comments</button>
+                        data-toggle="modal" data-target="#notesModal" id="notes" value={{_id}}>Notes</button>
                 </div>
             </div>
             {{/each}}
@@ -36,12 +36,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="commentsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="notesModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle"></h5>
+                <h5 class="modal-title" id="modalTitle">Notes For Article: {{_id}}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -50,10 +49,10 @@
                 <ul class="list-group">
 
                 </ul>
-                <textarea class="form-control" id="newComment" rows="3" placeholder="Add a comment"></textarea>
+                <textarea class="form-control" id="newNote" rows="3" placeholder="New Note"></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveComment">Save</button>
+                <button type="button" class="btn btn-primary" id="saveNote">Save Note</button>
             </div>
         </div>
     </div>

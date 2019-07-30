@@ -115,8 +115,8 @@ app.put("/removeFromSaved/:id", function (req, res) {
     });
 });
 
-// POST route - to save a comment
-app.post("/saveComment/:id", function (req, res) {
+// POST route - to save a note
+app.post("/saveNote/:id", function (req, res) {
     db.Note.create(req.body).then(function (dbNote) {
         return db.Article.findOneAndUpdate({ _id: req.params.id }, { $push: { notes: dbNote._id } }, { new: true });
     }).then(function (dbArticle) {
@@ -126,8 +126,8 @@ app.post("/saveComment/:id", function (req, res) {
     });
 });
 
-// GET route - to show comments per article
-app.get("/getComments/:id", function (req, res) {
+// GET route - to show notes per article
+app.get("/getNotes/:id", function (req, res) {
     db.Article.findOne({ _id: req.params.id }).populate("notes")
         .then(function (dbArticle) {
             res.json(dbArticle);
@@ -136,8 +136,8 @@ app.get("/getComments/:id", function (req, res) {
         });
 });
 
-// DELETE route - to delete a comment
-app.delete("/deleteComment/:noteid", function (req, res) {
+// DELETE route - to delete a note
+app.delete("/deleteNote/:noteid", function (req, res) {
     db.Note.deleteOne({ _id: req.params.noteid }).then(function (data) {
         console.log(data);
         res.send("Deleted");
