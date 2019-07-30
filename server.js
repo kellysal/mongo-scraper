@@ -32,8 +32,8 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to MongoDB - if deployed then use monolab - else use local db
-const MONGODB_URI = process.env.MONGO_URI || "mongodb://localhost/mongoHeadlines";
-
+// const MONGODB_URI = process.env.MONGO_URI || "mongodb://localhost/mongoHeadlines";
+const MONGODB_URI = process.env.MONGO_URI || "mongodb://user1:password1@ds253537.mlab.com:53537/heroku_mh6z8dv5";
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
