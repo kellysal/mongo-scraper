@@ -5,12 +5,14 @@
     </div>
 </nav>
 
-<div class="jumbotron jumbotron-fluid text-center" style="background-color:#EB352C;">
-    <h1>Buzzfeed Scraper</h1>
-    <a class="btn btn-primary btn-lg" style="background-color:black; color:white; border:none;" id="scrape"
+<div class="jumbotron jumbotron-fluid text-center"
+    style="background-color:#EB352C; color:white; height:400px; padding-top:125px;">
+    <h1 style="font-size: 4.5rem;">BuzzFeed</h1>
+
+    <a class="btn btn-primary btn-md" style="background-color:black; color:white; border:none; margin:10px;" id="scrape"
         role="button">Scrape
         Articles</a>
-    <a class="btn btn-primary btn-lg" style="background-color:black; color:white; border:none;" id="delete"
+    <a class="btn btn-primary btn-md" style="background-color:black; color:white; border:none; margin:10px;" id="delete"
         role="button">Delete
         Articles</a>
 </div>
@@ -22,12 +24,12 @@
 
             <div class="card" style="margin:30px;">
                 <div class="card-body" style="float:left;">
-
+                    <img src="./images/omg.png" style="height:60px; margin-bottom:10px;">
                     {{!-- <img src="{{this.image}}" style="height:100px;"> --}}
 
                     <a href="#" class="btn btn-primary" style="float:right; background-color: #EB352C; border:none;"
                         id="save" value={{this._id}}>Save
-                        Article</a>
+                    </a>
                     <a href={{this.link}}>
                         <h2 class="card-title" style="color:black;">{{this.title}}</h2>
                     </a>

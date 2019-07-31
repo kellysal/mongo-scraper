@@ -81,10 +81,13 @@ $(function () {
             $(".list-group").append(`<li class="list-group-item">${data.body}
             <button class="btn btn-danger" value=${data._id} id="deleteNote"> x </button>
             </li>`);
-
+            // if theres a note in the article
             if (data.note) {
+                // place the title of the note in the title input
                 $("#modalTitle").text("Notes For Article: " + id);
-                $("#saveNote").attr("value", id);
+                // place the body of the note in the body textarea
+                $(".list-group-item").attr("value", id);
+                // $("#saveNote").attr("value", id);
             }
 
         });
